@@ -18,6 +18,7 @@ require (
 	github.com/tidwall/gjson v1.8.1
 	github.com/tidwall/pretty v1.2.0 // indirect
 	golang.org/x/text v0.3.5
+	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2
 	gopkg.in/tucnak/telebot.v2 v2.3.5
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.12
