@@ -11,6 +11,7 @@ require (
 	github.com/jinzhu/configor v1.2.1
 	github.com/makiuchi-d/gozxing v0.0.2
 	github.com/nicksnyder/go-i18n/v2 v2.1.2
+	github.com/sethvargo/go-limiter v0.7.2
 	github.com/sirupsen/logrus v1.2.0
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/tidwall/btree v0.6.1 // indirect
@@ -18,7 +19,6 @@ require (
 	github.com/tidwall/gjson v1.8.1
 	github.com/tidwall/pretty v1.2.0 // indirect
 	golang.org/x/text v0.3.5
-	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2
 	gopkg.in/tucnak/telebot.v2 v2.3.5
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.12

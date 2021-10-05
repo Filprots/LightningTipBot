@@ -2,20 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/LightningTipBot/LightningTipBot/internal/limiter"
-	"golang.org/x/time/rate"
-	"sync"
-	"time"
-
 	"github.com/LightningTipBot/LightningTipBot/internal/i18n"
 	"github.com/LightningTipBot/LightningTipBot/internal/lnbits"
 	"github.com/LightningTipBot/LightningTipBot/internal/lnurl"
+	"github.com/LightningTipBot/LightningTipBot/internal/rate"
 	"github.com/LightningTipBot/LightningTipBot/internal/storage"
 	i18n2 "github.com/nicksnyder/go-i18n/v2/i18n"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/tucnak/telebot.v2"
 	tb "gopkg.in/tucnak/telebot.v2"
 	"gorm.io/gorm"
+	"sync"
+	"time"
 )
 
 type TipBot struct {
@@ -25,7 +23,7 @@ type TipBot struct {
 	telegram *telebot.Bot
 	client   *lnbits.Client
 	bundle   *i18n2.Bundle
-	limiter  *limiter.ChatIDRateLimiter
+	limiter  *rate.Limiter
 }
 
 var (
@@ -41,7 +39,7 @@ func NewBot() TipBot {
 		logger:   txLogger,
 		bunt:     storage.NewBunt(Configuration.Database.BuntDbPath),
 		bundle:   i18n.RegisterLanguages(),
-		limiter:  limiter.NewChatIDRateLimiter(rate.Limit(30), 30),
+		limiter:  rate.NewLimiter(),
 	}
 }
 
