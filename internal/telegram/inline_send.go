@@ -68,7 +68,7 @@ func (bot TipBot) handleInlineSendQuery(ctx context.Context, q *tb.Query) {
 	}
 	// check if fromUser has balance
 	if balance < amount {
-		log.Errorf("Balance of user %s too low", fromUserStr)
+		log.Warnf("Balance of user %s too low", fromUserStr)
 		bot.inlineQueryReplyWithError(q, TranslateUser(ctx, "inlineSendBalanceLowMessage"), fmt.Sprintf(TranslateUser(ctx, "inlineQuerySendDescription"), bot.Telegram.Me.Username))
 		return
 	}
@@ -172,7 +172,7 @@ func (bot *TipBot) acceptInlineSendHandler(ctx context.Context, c *tb.Callback) 
 		return
 	}
 	if !inlineSend.Active {
-		log.Errorf("[acceptInlineSendHandler] inline send not active anymore")
+		log.Warnf("[acceptInlineSendHandler] inline send not active anymore")
 		return
 	}
 
@@ -242,7 +242,7 @@ func (bot *TipBot) acceptInlineSendHandler(ctx context.Context, c *tb.Callback) 
 	_, err = bot.Telegram.Send(to.Telegram, fmt.Sprintf(i18n.Translate(to.Telegram.LanguageCode, "sendReceivedMessage"), fromUserStrMd, amount))
 	_, err = bot.Telegram.Send(fromUser.Telegram, fmt.Sprintf(i18n.Translate(fromUser.Telegram.LanguageCode, "sendSentMessage"), amount, toUserStrMd))
 	if err != nil {
-		errmsg := fmt.Errorf("[sendInline] Error: Send message to %s: %s", toUserStr, err)
+		errmsg := fmt.Errorf("[sendInline] Error sending to %s: %s", toUserStr, err)
 		log.Errorln(errmsg)
 		return
 	}

@@ -150,7 +150,7 @@ func (bot TipBot) makeQueryFaucet(ctx context.Context, q *tb.Query, query bool) 
 			bot.inlineQueryReplyWithError(q, TranslateUser(ctx, "inlineQueryFaucetTitle"), fmt.Sprintf(TranslateUser(ctx, "inlineQueryFaucetDescription"), bot.Telegram.Me.Username))
 			return nil, err
 		case errors.BalanceToLowError:
-			log.Errorf(err.Error())
+			log.Warnf(err.Error())
 			bot.inlineQueryReplyWithError(q, TranslateUser(ctx, "inlineSendBalanceLowMessage"), fmt.Sprintf(TranslateUser(ctx, "inlineQueryFaucetDescription"), bot.Telegram.Me.Username))
 			return nil, err
 		}
@@ -243,7 +243,7 @@ func (bot *TipBot) acceptInlineFaucetHandler(ctx context.Context, c *tb.Callback
 		return
 	}
 	if !inlineFaucet.Active {
-		log.Errorf(fmt.Sprintf("[faucet] faucet %s inactive.", inlineFaucet.ID))
+		log.Warnf(fmt.Sprintf("[faucet] faucet %s inactive.", inlineFaucet.ID))
 		return
 	}
 	// release faucet no matter what
@@ -304,7 +304,7 @@ func (bot *TipBot) acceptInlineFaucetHandler(ctx context.Context, c *tb.Callback
 		_, err = bot.Telegram.Send(to.Telegram, fmt.Sprintf(i18n.Translate(to.Telegram.LanguageCode, "inlineFaucetReceivedMessage"), fromUserStrMd, inlineFaucet.PerUserAmount))
 		_, err = bot.Telegram.Send(from.Telegram, fmt.Sprintf(i18n.Translate(from.Telegram.LanguageCode, "inlineFaucetSentMessage"), inlineFaucet.PerUserAmount, toUserStrMd))
 		if err != nil {
-			errmsg := fmt.Errorf("[faucet] Error: Send message to %s: %s", toUserStr, err)
+			errmsg := fmt.Errorf("[faucet] Error faucet to %s: %s", toUserStr, err)
 			log.Errorln(errmsg)
 			return
 		}

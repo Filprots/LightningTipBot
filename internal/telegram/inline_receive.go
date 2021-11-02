@@ -150,7 +150,7 @@ func (bot *TipBot) acceptInlineReceiveHandler(ctx context.Context, c *tb.Callbac
 	}
 
 	if !inlineReceive.Active {
-		log.Errorf("[acceptInlineReceiveHandler] inline receive not active anymore")
+		log.Warnf("[acceptInlineReceiveHandler] inline receive not active anymore")
 		return
 	}
 
@@ -192,7 +192,7 @@ func (bot *TipBot) acceptInlineReceiveHandler(ctx context.Context, c *tb.Callbac
 	}
 	// check if fromUser has balance
 	if balance < inlineReceive.Amount {
-		log.Errorf("[acceptInlineReceiveHandler] balance of user %s too low", fromUserStr)
+		log.Warnf("[acceptInlineReceiveHandler] balance of user %s too low", fromUserStr)
 		bot.trySendMessage(from.Telegram, Translate(ctx, "inlineSendBalanceLowMessage"))
 		return
 	}
@@ -229,7 +229,7 @@ func (bot *TipBot) acceptInlineReceiveHandler(ctx context.Context, c *tb.Callbac
 	_, err = bot.Telegram.Send(to.Telegram, fmt.Sprintf(i18n.Translate(to.Telegram.LanguageCode, "sendReceivedMessage"), fromUserStrMd, inlineReceive.Amount))
 	_, err = bot.Telegram.Send(from.Telegram, fmt.Sprintf(i18n.Translate(from.Telegram.LanguageCode, "sendSentMessage"), inlineReceive.Amount, toUserStrMd))
 	if err != nil {
-		errmsg := fmt.Errorf("[acceptInlineReceiveHandler] Error: Receive message to %s: %s", toUserStr, err)
+		errmsg := fmt.Errorf("[acceptInlineReceiveHandler] Error: Receive user %s: %s", toUserStr, err)
 		log.Errorln(errmsg)
 		return
 	}
